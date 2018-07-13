@@ -53,16 +53,16 @@ func main() {
     reader := bufio.NewReader(os.Stdin)
 
     fmt.Print("What is your project name ? ")
-    project_name, _ := reader.ReadString('\n')
+    project_name, _ := reader.ReadString('')
     
     fmt.Print("What is your image name ? ")
-    image_name, _ := reader.ReadString('\n')
+    image_name, _ := reader.ReadString('')
 
     fmt.Print("What is your exposed port ? ")
-    exposed_port, _ := reader.ReadString('\n')
+    exposed_port, _ := reader.ReadString('')
 
     fmt.Print("What is your host port ? ")
-    host_port, _ := reader.ReadString('\n')
+    host_port, _ := reader.ReadString('')
 
     fmt.Println("Initializing Project....")
     docker_folder := "dockerfiles"
