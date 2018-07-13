@@ -1,0 +1,3 @@
+FROM hello-world
+
+EXPOSE _EXPOSED_PORT
