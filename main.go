@@ -6,6 +6,7 @@ import (
     "os"
     "io/ioutil"
     "io"
+    "strings"
 )
 
 func replace(src, replace, replacement string) {
@@ -53,16 +54,24 @@ func main() {
     reader := bufio.NewReader(os.Stdin)
 
     fmt.Print("What is your project name ? ")
-    project_name, _ := reader.ReadString('')
+    project_name, _ := reader.ReadString('\n')
+    project_name = strings.Replace(project_name, "\n", "", -1)
+  
     
     fmt.Print("What is your image name ? ")
-    image_name, _ := reader.ReadString('')
+    image_name, _ := reader.ReadString('\n')
+    image_name = strings.Replace(image_name, "\n", "", -1)
+
 
     fmt.Print("What is your exposed port ? ")
-    exposed_port, _ := reader.ReadString('')
+    exposed_port, _ := reader.ReadString('\n')
+    exposed_port = strings.Replace(exposed_port, "\n", "", -1)
+
 
     fmt.Print("What is your host port ? ")
-    host_port, _ := reader.ReadString('')
+    host_port, _ := reader.ReadString('\n')
+    host_port = strings.Replace(host_port, "\n", "", -1)
+
 
     fmt.Println("Initializing Project....")
     docker_folder := "dockerfiles"
