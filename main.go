@@ -1,9 +1,8 @@
 package main
-
 import (
     "fmt"
     "bytes"
-    // "bufio"
+    "bufio"
     "os"
     "io/ioutil"
     "io"
@@ -50,23 +49,20 @@ func copyFileContents(src, dst string) (err error) {
 
 func main() {
     prefix := [3]string{"d","s","p"}
-    project_name := "tanihub-2018"
-    image_name := "thoth"
-    host_port := "3306"
-    exposed_port := "3306"
-    // reader := bufio.NewReader(os.Stdin)
-
-    // fmt.Print("What is your project name ? ")
-    // project_name, _ := reader.ReadString('\n')
     
-    // fmt.Print("What is your image name ? ")
-    // image_name, _ := reader.ReadString('\n')
+    reader := bufio.NewReader(os.Stdin)
 
-    // fmt.Print("What is your exposed port ? ")
-    // exposed_port, _ := reader.ReadString('\n')
+    fmt.Print("What is your project name ? ")
+    project_name, _ := reader.ReadString('\n')
+    
+    fmt.Print("What is your image name ? ")
+    image_name, _ := reader.ReadString('\n')
 
-    // fmt.Print("What is your host port ? ")
-    // host_port, _ := reader.ReadString('\n')
+    fmt.Print("What is your exposed port ? ")
+    exposed_port, _ := reader.ReadString('\n')
+
+    fmt.Print("What is your host port ? ")
+    host_port, _ := reader.ReadString('\n')
 
     fmt.Println("Initializing Project....")
     docker_folder := "dockerfiles"
