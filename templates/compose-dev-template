@@ -1,0 +1,23 @@
+version: "2"
+
+services:
+  _IMAGE_NAME:
+    image: gcr.io/_PROJECT_NAME/_IMAGE_NAME:latest
+    build:
+      context: .
+      dockerfile: dockerfiles/_DOCKER_FILE_NAME
+    env_file: .env
+    container_name: "_IMAGE_NAME"
+    working_dir: /usr/src
+    volumes:
+      - .:/usr/src
+    ports:
+      - "_HOST_PORT:_EXPOSED_PORT"
+    networks:
+      - default
+      - bridge-network
+networks:
+  default:
+    driver: bridge
+  bridge-network:
+    external: true

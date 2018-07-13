@@ -5,7 +5,6 @@ import (
     "bufio"
     "os"
     "io/ioutil"
-    "io"
     "strings"
 )
 
@@ -25,50 +24,27 @@ func replace(src, replace, replacement string) {
     }
 }
 
-func copyFileContents(src, dst string) (err error) {
-    in, err := os.Open(src)
-    if err != nil {
-        return
-    }
-    defer in.Close()
-    out, err := os.Create(dst)
-    if err != nil {
-        return
-    }
-    defer func() {
-        cerr := out.Close()
-        if err == nil {
-            err = cerr
-        }
-    }()
-    if _, err = io.Copy(out, in); err != nil {
-        return
-    }
-    err = out.Sync()
-    return
-}
-
 func main() {
     prefix := [3]string{"d","s","p"}
     
     reader := bufio.NewReader(os.Stdin)
 
-    fmt.Print("What is your project name ? ")
+    fmt.Print("What is your project name (GCP Project name) ? ")
     project_name, _ := reader.ReadString('\n')
     project_name = strings.Replace(project_name, "\n", "", -1)
   
     
-    fmt.Print("What is your image name ? ")
+    fmt.Print("What is your image name (Your image and container name) ? ")
     image_name, _ := reader.ReadString('\n')
     image_name = strings.Replace(image_name, "\n", "", -1)
 
 
-    fmt.Print("What is your exposed port ? ")
+    fmt.Print("What is your exposed container port ? ")
     exposed_port, _ := reader.ReadString('\n')
     exposed_port = strings.Replace(exposed_port, "\n", "", -1)
 
 
-    fmt.Print("What is your host port ? ")
+    fmt.Print("What is your host to container port ? ")
     host_port, _ := reader.ReadString('\n')
     host_port = strings.Replace(host_port, "\n", "", -1)
 
@@ -77,11 +53,31 @@ func main() {
     docker_folder := "dockerfiles"
     os.Mkdir(docker_folder, 0755);
 
+    docker_template, err := Asset("templates/docker-template")
+    if err != nil {
+        fmt.Println(Asset("aset not found"))
+    }
+    
+    compose_template, err := Asset("templates/compose-template")
+    if err != nil {
+        fmt.Println(Asset("aset not found"))
+    }
+
+    compose_dev_template, err := Asset("templates/compose-dev-template")
+    if err != nil {
+        fmt.Println(Asset("aset not found"))
+    }
+
+    jenkins_template, err := Asset("templates/jenkins-template")
+    if err != nil {
+        fmt.Println(Asset("aset not found"))
+    }
+
     fmt.Println("Creating Dockerfiles....")
     dockerfiles := [3]string{"app.docker.dev","app.docker.staging","app.docker"}
 
     for _, value := range dockerfiles {
-        copyFileContents("templates/docker-template", docker_folder+"/"+value)
+        ioutil.WriteFile(docker_folder+"/"+value, []byte(docker_template), 0644)
         replace(docker_folder+"/"+value, "_EXPOSED_PORT", exposed_port)    
     }
 
@@ -89,7 +85,11 @@ func main() {
     composefiles := [3]string{"docker-compose.dev.yaml","docker-compose.staging.yaml","docker-compose.yaml"}
 
     for i, value := range composefiles {
-        copyFileContents("templates/compose-template", value)
+        if value == "docker-compose.dev.yaml" {
+            ioutil.WriteFile(value, []byte(compose_dev_template), 0644)
+        }else{
+            ioutil.WriteFile(value, []byte(compose_template), 0644)
+        }
         replace(value, "_PROJECT_NAME", project_name)
         replace(value, "_IMAGE_NAME", prefix[i]+"-"+image_name)
         replace(value, "_EXPOSED_PORT", exposed_port)
@@ -101,7 +101,7 @@ func main() {
     jenkinsfiles := [2]string{"Jenkinsfile.staging","Jenkinsfile"}
 
     for i, value := range jenkinsfiles {
-        copyFileContents("templates/jenkins-template", value)
+        ioutil.WriteFile(value, []byte(jenkins_template), 0644)
         replace(value, "_COMPOSE_FILE_NAME", composefiles[i+1])
         replace(value, "_IMAGE_NAME", prefix[i+1]+"-"+image_name)
     }
