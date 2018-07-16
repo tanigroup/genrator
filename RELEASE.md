@@ -1,4 +1,7 @@
 # RELEASE NOTES
+### 0.3.0
+* add base image template
+
 ### 0.2.0
 * add readme anda release note
 * convert file to asset
