@@ -33,6 +33,9 @@ func main() {
     project_name, _ := reader.ReadString('\n')
     project_name = strings.Replace(project_name, "\n", "", -1)
   
+    fmt.Print("What is your base image name (Your base image) ? ")
+    base_image_name, _ := reader.ReadString('\n')
+    base_image_name = strings.Replace(base_image_name, "\n", "", -1)
     
     fmt.Print("What is your image name (Your image and container name) ? ")
     image_name, _ := reader.ReadString('\n')
@@ -78,7 +81,8 @@ func main() {
 
     for _, value := range dockerfiles {
         ioutil.WriteFile(docker_folder+"/"+value, []byte(docker_template), 0644)
-        replace(docker_folder+"/"+value, "_EXPOSED_PORT", exposed_port)    
+        replace(docker_folder+"/"+value, "_EXPOSED_PORT", exposed_port)  
+        replace(docker_folder+"/"+value, "_BASE_IMAGE", base_image_name)   
     }
 
     fmt.Println("Creating Compose Files....")

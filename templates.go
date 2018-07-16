@@ -86,7 +86,7 @@ func templatesComposeDevTemplate() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "templates/compose-dev-template", size: 476, mode: os.FileMode(511), modTime: time.Unix(1531473494, 0)}
+	info := bindataFileInfo{name: "templates/compose-dev-template", size: 476, mode: os.FileMode(511), modTime: time.Unix(1531474912, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -111,7 +111,7 @@ func templatesComposeTemplate() (*asset, error) {
 	return a, nil
 }
 
-var _templatesDockerTemplate = []byte("\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\xff\x72\x0b\xf2\xf7\x55\xc8\x48\xcd\xc9\xc9\xd7\x2d\xcf\x2f\xca\x49\xe1\xe5\xe2\xe5\x72\x8d\x08\xf0\x0f\x76\x55\x88\x87\xd0\x2e\xf1\x01\xfe\x41\x21\x80\x00\x00\x00\xff\xff\x11\x07\x16\x72\x28\x00\x00\x00")
+var _templatesDockerTemplate = []byte("\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\xff\x72\x0b\xf2\xf7\x55\x88\x77\x72\x0c\x76\x8d\xf7\xf4\x75\x74\x77\xe5\xe5\xe2\xe5\x72\x8d\x08\xf0\x0f\x76\x55\x88\x87\xd0\x2e\xf1\x01\xfe\x41\x21\x80\x00\x00\x00\xff\xff\x6a\xb8\xec\x2a\x28\x00\x00\x00")
 
 func templatesDockerTemplateBytes() ([]byte, error) {
 	return bindataRead(
@@ -126,7 +126,7 @@ func templatesDockerTemplate() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "templates/docker-template", size: 40, mode: os.FileMode(511), modTime: time.Unix(1531456150, 0)}
+	info := bindataFileInfo{name: "templates/docker-template", size: 40, mode: os.FileMode(511), modTime: time.Unix(1531712042, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
