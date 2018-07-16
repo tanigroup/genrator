@@ -7,7 +7,7 @@ The best way to install this tool is downloading the binary file from newest rel
 __Linux and macOS:__
 
 ```sh
-curl -L https://github.com/tanigroup/genrator/releases/download/0.2.0/genrator -o genrator
+curl -L https://github.com/tanigroup/genrator/releases/download/0.3.0/genrator -o genrator
 
 chmod +x genrator
 sudo mv ./genrator /usr/local/bin/genrator
