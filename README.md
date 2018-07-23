@@ -7,10 +7,9 @@ The best way to install this tool is downloading the binary file from newest rel
 __Linux and macOS:__
 
 ```sh
-curl -L https://github.com/tanigroup/genrator/releases/download/0.3.0/genrator -o genrator
+Please refer to our relase tag page, and download specific executable release based on platform you use.
 
-chmod +x genrator
-sudo mv ./genrator /usr/local/bin/genrator
+[Release](https://gitlab.tanihub.com/tanigroup/genrator/tags)
 ```
 
 ## How to use
