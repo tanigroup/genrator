@@ -6,11 +6,9 @@
 The best way to install this tool is downloading the binary file from newest release
 __Linux and macOS:__
 
-```sh
-Please refer to our relase tag page, and download specific executable release based on platform you use.
 
+Please refer to our relase tag page, and download specific executable release based on platform you use.
 [Release](https://gitlab.tanihub.com/tanigroup/genrator/tags)
-```
 
 ## How to use
 ```sh
