@@ -1,4 +1,7 @@
 # RELEASE NOTES
+### 0.4.0
+* change templates and add new jenkinsfile command
+  
 ### 0.3.0
 * add base image template
 
