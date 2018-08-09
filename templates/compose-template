@@ -9,7 +9,5 @@ services:
     env_file: .env
     container_name: "_IMAGE_NAME"
     working_dir: /usr/src
-    volumes:
-      - .:/usr/src
     ports:
-      - "_HOST_PORT:_EXPOSED_PORT"
+      - "_EXPOSED_PORT:_EXPOSED_PORT"

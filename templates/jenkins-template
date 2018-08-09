@@ -31,6 +31,9 @@ pipeline {
       stage('kompose') {
         steps {
           sh "kompose convert -f _COMPOSE_FILE_NAME"
+          sh "sed -i \'s:io.kompose.service:app:\' _IMAGE_NAME-deployment.yaml"
+          sh "sed -i \'s:io.kompose.service:app:\' _IMAGE_NAME-service.yaml"
+          sh "sed -i \'s:\"_EXPOSED_PORT\":\"http\":\' _IMAGE_NAME-service.yaml"
           sh "gcloud container clusters get-credentials  ${cluster_name} --zone asia-southeast1-a --project ${project_name}"
         }
       }
