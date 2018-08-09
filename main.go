@@ -29,25 +29,25 @@ func main() {
     
     reader := bufio.NewReader(os.Stdin)
 
-    fmt.Print("What is your project name (GCP Project name) ? ")
+    fmt.Print("What is your GCP Project name ? ")
     project_name, _ := reader.ReadString('\n')
     project_name = strings.Replace(project_name, "\n", "", -1)
   
-    fmt.Print("What is your base image name (Your base image) ? ")
+    fmt.Print("What base image you use for this APP ? ")
     base_image_name, _ := reader.ReadString('\n')
     base_image_name = strings.Replace(base_image_name, "\n", "", -1)
     
-    fmt.Print("What is your image name (Your image and container name) ? ")
+    fmt.Print("What will be the name of your APP ? ")
     image_name, _ := reader.ReadString('\n')
     image_name = strings.Replace(image_name, "\n", "", -1)
 
 
-    fmt.Print("What is your exposed container port ? ")
+    fmt.Print("What will be your base container port ? ")
     exposed_port, _ := reader.ReadString('\n')
     exposed_port = strings.Replace(exposed_port, "\n", "", -1)
 
 
-    fmt.Print("What is your host to container port ? ")
+    fmt.Print("What port you want your APP listen in your PC ? ")
     host_port, _ := reader.ReadString('\n')
     host_port = strings.Replace(host_port, "\n", "", -1)
 
@@ -108,6 +108,7 @@ func main() {
         ioutil.WriteFile(value, []byte(jenkins_template), 0644)
         replace(value, "_COMPOSE_FILE_NAME", composefiles[i+1])
         replace(value, "_IMAGE_NAME", prefix[i+1]+"-"+image_name)
+        replace(value, "_EXPOSED_PORT", exposed_port)
     }
 
     fmt.Println("Done....")
