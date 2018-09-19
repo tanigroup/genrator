@@ -1,5 +1,8 @@
 # RELEASE NOTES
 
+### 0.6.0
+* [MODIFY] refactor main.go
+
 ### 0.5.0
 * [MODIFY] jenkinsfile to use namespace
   
