@@ -49,16 +49,16 @@ pipeline {
       }
       stage('deploy') {
         steps {
-	  sh '''
-	  if
-	  kubectl get svc | grep -q _IMAGE_NAME
-	  then 
-          kubectl apply -f _IMAGE_NAME-deployment.yaml
-	  else
-	  kubectl  create -f _IMAGE_NAME-deployment.yaml -f _IMAGE_NAME-service.yaml
-	  fi
-	  '''      
-      }
+          sh '''
+            if
+              kubectl get svc -n _NAMESPACE_NAME | grep -q _IMAGE_NAME
+            then
+              kubectl apply -f _IMAGE_NAME-deployment.yaml -n _NAMESPACE_NAME
+            else
+              kubectl create -f _IMAGE_NAME-deployment.yaml -f _IMAGE_NAME-service.yaml -n _NAMESPACE_NAME
+            fi
+          '''
+        }
       }
     }
   }

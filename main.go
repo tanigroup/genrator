@@ -29,17 +29,21 @@ func main() {
     
     reader := bufio.NewReader(os.Stdin)
 
-    fmt.Print("What is your GCP Project name ? ")
+    fmt.Print("What is your 'GCP Project' name ? ")
     project_name, _ := reader.ReadString('\n')
     project_name = strings.Replace(project_name, "\n", "", -1)
   
-    fmt.Print("What base image you use for this APP ? ")
+    fmt.Print("What 'base image' you use for this APP ? ")
     base_image_name, _ := reader.ReadString('\n')
     base_image_name = strings.Replace(base_image_name, "\n", "", -1)
     
-    fmt.Print("What will be the name of your APP ? ")
+    fmt.Print("What will be the 'name' of your APP ? ")
     image_name, _ := reader.ReadString('\n')
     image_name = strings.Replace(image_name, "\n", "", -1)
+    
+    fmt.Print("What will be the 'namespace' of your APP ? ")
+    namespace_name, _ := reader.ReadString('\n')
+    namespace_name = strings.Replace(namespace_name, "\n", "", -1)
 
 
     fmt.Print("What will be your base container port ? ")
@@ -109,6 +113,7 @@ func main() {
         replace(value, "_COMPOSE_FILE_NAME", composefiles[i+1])
         replace(value, "_IMAGE_NAME", prefix[i+1]+"-"+image_name)
         replace(value, "_EXPOSED_PORT", exposed_port)
+        replace(value, "_NAMESPACE_NAME", namespace_name)
     }
 
     fmt.Println("Done....")
