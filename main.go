@@ -8,7 +8,7 @@ import (
     "io/ioutil"
     "strings"
 )
-const version = "0.5.0"
+const version = "0.6.1"
 
 func use(vals ...interface{}) {
     for _, val := range vals {
