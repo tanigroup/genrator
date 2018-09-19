@@ -1,4 +1,7 @@
 # RELEASE NOTES
+### 0.7.0
+* [ADD] selfupdate function
+
 ### 0.6.1
 * [MODIFY] app version
 
