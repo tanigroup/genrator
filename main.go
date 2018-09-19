@@ -7,13 +7,27 @@ import (
     "os"
     "io/ioutil"
     "strings"
+    "github.com/blang/semver"
+	"github.com/rhysd/go-github-selfupdate/selfupdate"
 )
 const version = "0.6.1"
 
-func use(vals ...interface{}) {
-    for _, val := range vals {
-        _ = val
+func selfUpdate(slug string) error {
+	selfupdate.EnableLog()
+
+	previous := semver.MustParse(version)
+	latest, err := selfupdate.UpdateSelf(previous, slug)
+	if err != nil {
+		return err
+	}
+
+	if previous.Equals(latest.Version) {
+		fmt.Println("Current binary is the latest version", version)
+	} else {
+		fmt.Println("Update successfully done to version", latest.Version)
+		fmt.Println("Release note:\n", latest.ReleaseNotes)
     }
+	return nil
 }
 
 func replace(src, replace, replacement string) {
@@ -81,12 +95,23 @@ func createJenkinsfile(image_name string, exposed_port string, namespace_name st
 
 func main() {
     ver := flag.Bool("version", false, "Show version")
+    update := flag.Bool("selfupdate", false, "Try selfupdate via GitHub")
+    slug := flag.String("slug", "tanigroup/genrator", "Repository of this command")
+    
     flag.Parse()
     
     if *ver {
 		fmt.Println(version)
 		os.Exit(0)
     }
+     
+    if *update {
+		if err := selfUpdate(*slug); err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+		os.Exit(0)
+	}
      
     reader := bufio.NewReader(os.Stdin)
 
