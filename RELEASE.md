@@ -1,4 +1,6 @@
 # RELEASE NOTES
+### 0.6.1
+* [MODIFY] app version
 
 ### 0.6.0
 * [MODIFY] refactor main.go
