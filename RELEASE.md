@@ -1,4 +1,8 @@
 # RELEASE NOTES
+
+### 0.5.0
+* [MODIFY] jenkinsfile to use namespace
+  
 ### 0.4.0
 * change templates and add new jenkinsfile command
   
