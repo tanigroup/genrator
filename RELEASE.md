@@ -1,4 +1,11 @@
 # RELEASE NOTES
+
+### 0.8.0
+* [REMOVE] build folder from git
+* [MODIFY] working _dir value
+* [MODIFY] staging compose config to use production dockerfile
+* [MODIFY] jenkins config template based on blue-green deployment
+
 ### 0.7.0
 * [ADD] selfupdate function
 
