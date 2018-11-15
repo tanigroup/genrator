@@ -10,6 +10,10 @@ pipeline {
       cluster_name = "${params.cluster_name}"
       project_name = "${params.project_name}"
       file_id = "${params.file_id}"
+      dash_name = sh (
+       script: "if [ \$((${BUILD_NUMBER}%2)) -eq 0 ] ; then echo 'green'; else echo 'blue'; fi",
+       returnStdout: true
+      ).trim()
     }
     stages {
       stage('load env') {
@@ -24,16 +28,18 @@ pipeline {
       stage('build') {
         steps {
           sh "sed -i \'s:latest:${tag_ver}:\' _COMPOSE_FILE_NAME"
+          sh "sed -i \'s:latest:${tag_ver}:\' .env"
           sh "docker-compose -f _COMPOSE_FILE_NAME build"
           sh "docker images"
         }
       }
-      stage('kompose') {
+      stage('cluster prepare') {
         steps {
-          sh "kompose convert -f _COMPOSE_FILE_NAME"
-          sh "sed -i \'s:io.kompose.service:app:\' _IMAGE_NAME-deployment.yaml"
-          sh "sed -i \'s:io.kompose.service:app:\' _IMAGE_NAME-service.yaml"
-          sh "sed -i \'s:\"_EXPOSED_PORT\":\"http\":\' _IMAGE_NAME-service.yaml"
+          sh "kubectl create -n _NAMESPACE_NAME secret generic _IMAGE_NAME-secret --from-env-file=.env --dry-run -o yaml | kubectl apply -n _NAMESPACE_NAME -f -"
+          sh "sed -i \':a;N;\$!ba;s/name: _IMAGE_NAME/name: _IMAGE_NAME-${dash_name}/2\' _IMAGE_NAME.yaml"
+          sh "sed -i \'s,version: latest,version: ${dash_name},g\' _IMAGE_NAME.yaml"
+          sh "sed -i \'s,_IMAGE_NAME:latest,_IMAGE_NAME:${tag_ver},g\' _IMAGE_NAME.yaml"
+
           sh "gcloud container clusters get-credentials  ${cluster_name} --zone asia-southeast1-a --project ${project_name}"
         }
       }
@@ -49,15 +55,7 @@ pipeline {
       }
       stage('deploy') {
         steps {
-          sh '''
-            if
-              kubectl get svc -n _NAMESPACE_NAME | grep -q _IMAGE_NAME
-            then
-              kubectl apply -f _IMAGE_NAME-deployment.yaml -n _NAMESPACE_NAME
-            else
-              kubectl create -f _IMAGE_NAME-deployment.yaml -f _IMAGE_NAME-service.yaml -n _NAMESPACE_NAME
-            fi
-          '''
+          sh "kubectl apply -f _IMAGE_NAME.yaml -n _NAMESPACE_NAME"
         }
       }
     }

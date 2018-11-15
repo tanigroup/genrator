@@ -95,6 +95,7 @@ func createJenkinsfile(image_name string, exposed_port string, namespace_name st
 
 func main() {
     ver := flag.Bool("version", false, "Show version")
+    jenkinsconf := flag.Bool("jenkinsonly", false, "Create only jenkinsfile")
     update := flag.Bool("selfupdate", false, "Try selfupdate via GitHub")
     slug := flag.String("slug", "tanigroup/genrator", "Repository of this command")
     
@@ -149,7 +150,14 @@ func main() {
     compose_template :=findAsset("templates/compose-template")
     compose_dev_template:=findAsset("templates/compose-dev-template")
     jenkins_template:=findAsset("templates/jenkins-template")
-
+   
+    flag.Parse()
+    if *jenkinsconf {
+		fmt.Println("Creating jenkinsfile only")
+        createJenkinsfile(image_name, exposed_port, namespace_name, prefix, composefiles, jenkinsfiles,jenkins_template)
+		os.Exit(0)
+    }
+    
     createDockerfiles(exposed_port, base_image_name, dockerfiles, docker_template)
     createDockerCompose(project_name, image_name, exposed_port, host_port, prefix, dockerfiles, composefiles, compose_dev_template, compose_template)
     createJenkinsfile(image_name, exposed_port, namespace_name, prefix, composefiles, jenkinsfiles,jenkins_template)
