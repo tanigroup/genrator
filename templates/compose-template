@@ -8,6 +8,6 @@ services:
       dockerfile: dockerfiles/_DOCKER_FILE_NAME
     env_file: .env
     container_name: "_IMAGE_NAME"
-    working_dir: /usr/src
+    working_dir: /usr/src/app
     ports:
       - "_EXPOSED_PORT:_EXPOSED_PORT"

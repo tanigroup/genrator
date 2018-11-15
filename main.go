@@ -54,7 +54,7 @@ func findAsset(assetSrc string)([]byte){
     return asset_template;
 }
 
-func createDockerfiles(exposed_port string, base_image_name string, dockerfiles [3]string, docker_template []byte ){
+func createDockerfiles(exposed_port string, base_image_name string, dockerfiles [2]string, docker_template []byte ){
     fmt.Println("Creating Dockerfiles....")
     docker_folder := "dockerfiles"
     os.Mkdir(docker_folder, 0755);
@@ -66,19 +66,20 @@ func createDockerfiles(exposed_port string, base_image_name string, dockerfiles 
     }
 }
 
-func createDockerCompose(project_name string,image_name string,exposed_port string, host_port string, prefix [3]string, dockerfiles [3]string, composefiles [3]string, compose_dev_template []byte, compose_template []byte){
+func createDockerCompose(project_name string,image_name string,exposed_port string, host_port string, prefix [3]string, dockerfiles [2]string, composefiles [3]string, compose_dev_template []byte, compose_template []byte){
     fmt.Println("Creating Compose Files....")
     for i, value := range composefiles {
         if value == "docker-compose.dev.yaml" {
             ioutil.WriteFile(value, []byte(compose_dev_template), 0644)
+            replace(value, "_DOCKER_FILE_NAME", dockerfiles[0])
         }else{
             ioutil.WriteFile(value, []byte(compose_template), 0644)
+            replace(value, "_DOCKER_FILE_NAME", dockerfiles[1])
         }
         replace(value, "_PROJECT_NAME", project_name)
         replace(value, "_IMAGE_NAME", prefix[i]+"-"+image_name)
         replace(value, "_EXPOSED_PORT", exposed_port)
         replace(value, "_HOST_PORT", host_port)
-        replace(value, "_DOCKER_FILE_NAME", dockerfiles[i])
     }
 }
 
@@ -95,6 +96,7 @@ func createJenkinsfile(image_name string, exposed_port string, namespace_name st
 
 func main() {
     ver := flag.Bool("version", false, "Show version")
+    jenkinsconf := flag.Bool("jenkinsonly", false, "Create only jenkinsfile")
     update := flag.Bool("selfupdate", false, "Try selfupdate via GitHub")
     slug := flag.String("slug", "tanigroup/genrator", "Repository of this command")
     
@@ -143,13 +145,20 @@ func main() {
 
     prefix := [3]string{"d","s","p"}
     composefiles := [3]string{"docker-compose.dev.yaml","docker-compose.staging.yaml","docker-compose.yaml"}
-    dockerfiles := [3]string{"app.docker.dev","app.docker.staging","app.docker"}
+    dockerfiles := [2]string{"app.docker.dev","app.docker"}
     jenkinsfiles := [2]string{"Jenkinsfile.staging","Jenkinsfile"}
     docker_template :=findAsset("templates/docker-template")
     compose_template :=findAsset("templates/compose-template")
     compose_dev_template:=findAsset("templates/compose-dev-template")
     jenkins_template:=findAsset("templates/jenkins-template")
-
+   
+    flag.Parse()
+    if *jenkinsconf {
+		fmt.Println("Creating jenkinsfile only")
+        createJenkinsfile(image_name, exposed_port, namespace_name, prefix, composefiles, jenkinsfiles,jenkins_template)
+		os.Exit(0)
+    }
+    
     createDockerfiles(exposed_port, base_image_name, dockerfiles, docker_template)
     createDockerCompose(project_name, image_name, exposed_port, host_port, prefix, dockerfiles, composefiles, compose_dev_template, compose_template)
     createJenkinsfile(image_name, exposed_port, namespace_name, prefix, composefiles, jenkinsfiles,jenkins_template)
