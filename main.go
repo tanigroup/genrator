@@ -10,7 +10,7 @@ import (
     "github.com/blang/semver"
 	"github.com/rhysd/go-github-selfupdate/selfupdate"
 )
-const version = "0.8.0"
+const version = "0.8.1"
 
 func selfUpdate(slug string) error {
 	selfupdate.EnableLog()
