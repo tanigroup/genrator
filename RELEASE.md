@@ -1,5 +1,8 @@
 # RELEASE NOTES
 
+### 0.8.1
+* [MODIFY] dash_name function
+
 ### 0.8.0
 * [REMOVE] build folder from git
 * [MODIFY] working _dir value

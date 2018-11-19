@@ -11,7 +11,7 @@ pipeline {
       project_name = "${params.project_name}"
       file_id = "${params.file_id}"
       dash_name = sh (
-       script: "if [ \$((${BUILD_NUMBER}%2)) -eq 0 ] ; then echo 'green'; else echo 'blue'; fi",
+       script: "if kubectl get virtualservices.networking.istio.io -n _NAMESPACE_NAME | grep -q _IMAGE_NAME && kubectl get -n _NAMESPACE_NAME virtualservices.networking.istio.io _IMAGE_NAME-vs -o yaml | grep -q blue ; then echo 'green'; else echo 'blue'; fi",
        returnStdout: true
       ).trim()
     }
