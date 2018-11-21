@@ -1,5 +1,8 @@
 # RELEASE NOTES
 
+### 0.9.0
+* [ADD] --cluster option on jenkinsfile
+
 ### 0.8.1
 * [MODIFY] dash_name function
 
