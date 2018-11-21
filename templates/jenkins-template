@@ -11,7 +11,7 @@ pipeline {
       project_name = "${params.project_name}"
       file_id = "${params.file_id}"
       dash_name = sh (
-       script: "if kubectl get virtualservices.networking.istio.io -n _NAMESPACE_NAME | grep -q _IMAGE_NAME && kubectl get -n _NAMESPACE_NAME virtualservices.networking.istio.io _IMAGE_NAME-vs -o yaml | grep -q blue ; then echo 'green'; else echo 'blue'; fi",
+       script: "if kubectl get virtualservices.networking.istio.io -n _NAMESPACE_NAME --cluster gke_${project_name}_asia-southeast1-a_${cluster_name} | grep -q _IMAGE_NAME && kubectl get -n _NAMESPACE_NAME --cluster gke_${project_name}_asia-southeast1-a_${cluster_name} virtualservices.networking.istio.io _IMAGE_NAME-vs -o yaml | grep -q blue ; then echo 'green'; else echo 'blue'; fi",
        returnStdout: true
       ).trim()
     }
@@ -35,12 +35,10 @@ pipeline {
       }
       stage('cluster prepare') {
         steps {
-          sh "kubectl create -n _NAMESPACE_NAME secret generic _IMAGE_NAME-secret --from-env-file=.env --dry-run -o yaml | kubectl apply -n _NAMESPACE_NAME -f -"
+          sh "kubectl create -n _NAMESPACE_NAME --cluster gke_${project_name}_asia-southeast1-a_${cluster_name} secret generic _IMAGE_NAME-secret --from-env-file=.env --dry-run -o yaml | kubectl apply -n _NAMESPACE_NAME --cluster gke_${project_name}_asia-southeast1-a_${cluster_name} -f -"
           sh "sed -i \':a;N;\$!ba;s/name: _IMAGE_NAME/name: _IMAGE_NAME-${dash_name}/2\' _IMAGE_NAME.yaml"
           sh "sed -i \'s,version: latest,version: ${dash_name},g\' _IMAGE_NAME.yaml"
           sh "sed -i \'s,_IMAGE_NAME:latest,_IMAGE_NAME:${tag_ver},g\' _IMAGE_NAME.yaml"
-
-          sh "gcloud container clusters get-credentials  ${cluster_name} --zone asia-southeast1-a --project ${project_name}"
         }
       }
       stage('push') {
@@ -55,7 +53,7 @@ pipeline {
       }
       stage('deploy') {
         steps {
-          sh "kubectl apply -f _IMAGE_NAME.yaml -n _NAMESPACE_NAME"
+          sh "kubectl apply -f _IMAGE_NAME.yaml -n _NAMESPACE_NAME --cluster gke_${project_name}_asia-southeast1-a_${cluster_name}"
         }
       }
     }
