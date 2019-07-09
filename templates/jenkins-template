@@ -53,7 +53,7 @@ pipeline {
       }
       stage('deploy') {
         steps {
-          sh "kubectl apply -f _IMAGE_NAME.yaml -n _NAMESPACE_NAME --cluster gke_${project_name}_asia-southeast1-a_${cluster_name}"
+          sh "curl _UPDATE_SCRIPT_URL | bash -s -- _NAMESPACE_NAME ${dash_name}"
         }
       }
     }

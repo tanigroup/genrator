@@ -10,7 +10,7 @@ import (
     "github.com/blang/semver"
 	"github.com/rhysd/go-github-selfupdate/selfupdate"
 )
-const version = "0.9.0"
+const version = "0.9.1"
 
 func selfUpdate(slug string) error {
 	selfupdate.EnableLog()
@@ -89,6 +89,13 @@ func createJenkinsfile(image_name string, exposed_port string, namespace_name st
         ioutil.WriteFile(value, []byte(jenkins_template), 0644)
         replace(value, "_COMPOSE_FILE_NAME", composefiles[i+1])
         replace(value, "_IMAGE_NAME", prefix[i+1]+"-"+image_name)
+        
+        if prefix[i+1] == "s" {
+            replace(value, "_UPDATE_SCRIPT_URL", "https://gitlab.tanihub.com/unrestricted-repository/kubernetes-manifest-command/raw/master/updateStagingManifest.sh")
+        }else{
+            replace(value, "_UPDATE_SCRIPT_URL", "https://gitlab.tanihub.com/unrestricted-repository/kubernetes-manifest-command/raw/master/updateProductionManifest.sh")            
+        }
+        
         replace(value, "_EXPOSED_PORT", exposed_port)
         replace(value, "_NAMESPACE_NAME", namespace_name)
     }

@@ -1,5 +1,8 @@
 # RELEASE NOTES
 
+### 0.9.1
+* [MODIFY] deploy stage on jenkins config
+
 ### 0.9.0
 * [ADD] --cluster option on jenkinsfile
 
