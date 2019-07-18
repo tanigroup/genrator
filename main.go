@@ -100,6 +100,18 @@ func createJenkinsfile(image_name string, exposed_port string, namespace_name st
         replace(value, "_NAMESPACE_NAME", namespace_name)
     }
 }
+func kubernetesConfig(project_name string, image_name string, exposed_port string, prefix [3]string, kubernetes_template []byte){
+    fmt.Println("Creating Kubernetes Config....")
+    for i, value := range prefix {
+        if value == "d" {
+            continue
+        }
+        ioutil.WriteFile(value+"-"+image_name+".yaml", []byte(kubernetes_template), 0644)
+        replace(value+"-"+image_name+".yaml", "_IMAGE_NAME", prefix[i]+"-"+image_name)
+        replace(value+"-"+image_name+".yaml", "_EXPOSED_PORT", exposed_port)
+        replace(value+"-"+image_name+".yaml", "_PROJECT_NAME", project_name)
+    }
+}
 
 func main() {
     ver := flag.Bool("version", false, "Show version")
@@ -158,6 +170,7 @@ func main() {
     compose_template :=findAsset("templates/compose-template")
     compose_dev_template:=findAsset("templates/compose-dev-template")
     jenkins_template:=findAsset("templates/jenkins-template")
+    kubernetes_template:=findAsset("templates/kubernetes-template")
    
     flag.Parse()
     if *jenkinsconf {
@@ -169,5 +182,6 @@ func main() {
     createDockerfiles(exposed_port, base_image_name, dockerfiles, docker_template)
     createDockerCompose(project_name, image_name, exposed_port, host_port, prefix, dockerfiles, composefiles, compose_dev_template, compose_template)
     createJenkinsfile(image_name, exposed_port, namespace_name, prefix, composefiles, jenkinsfiles,jenkins_template)
+    kubernetesConfig(project_name, image_name, exposed_port, prefix, kubernetes_template)
     fmt.Println("Done....")
 }
