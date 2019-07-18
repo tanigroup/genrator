@@ -1,5 +1,9 @@
 # RELEASE NOTES
 
+### 0.10.0
+* [ADD] k8s template to the binary
+* [ADD] create k8s config function
+
 ### 0.9.1
 * [MODIFY] deploy stage on jenkins config
 
