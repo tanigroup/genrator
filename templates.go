@@ -4,6 +4,7 @@
 // templates/compose-template
 // templates/docker-template
 // templates/jenkins-template
+// templates/kubernetes-template
 // DO NOT EDIT!
 
 package main
@@ -86,7 +87,7 @@ func templatesComposeDevTemplate() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "templates/compose-dev-template", size: 484, mode: os.FileMode(484), modTime: time.Unix(1542274267, 0)}
+	info := bindataFileInfo{name: "templates/compose-dev-template", size: 484, mode: os.FileMode(420), modTime: time.Unix(1563422270, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -106,7 +107,7 @@ func templatesComposeTemplate() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "templates/compose-template", size: 311, mode: os.FileMode(484), modTime: time.Unix(1542274267, 0)}
+	info := bindataFileInfo{name: "templates/compose-template", size: 311, mode: os.FileMode(420), modTime: time.Unix(1563422270, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -126,7 +127,7 @@ func templatesDockerTemplate() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "templates/docker-template", size: 40, mode: os.FileMode(484), modTime: time.Unix(1539084282, 0)}
+	info := bindataFileInfo{name: "templates/docker-template", size: 40, mode: os.FileMode(420), modTime: time.Unix(1563422270, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -146,7 +147,27 @@ func templatesJenkinsTemplate() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "templates/jenkins-template", size: 2485, mode: os.FileMode(484), modTime: time.Unix(1562650630, 0)}
+	info := bindataFileInfo{name: "templates/jenkins-template", size: 2485, mode: os.FileMode(420), modTime: time.Unix(1563422270, 0)}
+	a := &asset{bytes: bytes, info: info}
+	return a, nil
+}
+
+var _templatesKubernetesTemplate = []byte("\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\xff\xac\x53\xc1\x8e\xda\x30\x10\xbd\xe7\x2b\x46\x5b\xf5\x98\xb2\x5c\x7d\xa3\x2c\xad\xa8\xba\x4b\x04\xb4\xea\x0d\x0d\x66\x36\x6b\xd5\xb1\xad\xf1\x84\x6e\xb4\xda\x7f\xaf\x9c\x10\xc8\x16\xa8\x54\xa9\x73\x82\xf1\x9b\xf7\x5e\x9e\x3d\x79\x9e\x67\xef\x60\xe5\x6b\xd6\xa4\xa0\x24\x47\x8c\x42\x3b\xd8\x36\xe9\x0f\xa3\x78\xce\x30\x98\xef\xc4\xd1\x78\xa7\x60\x3f\xce\x7e\x1a\xb7\x53\xb0\x22\xde\x1b\x4d\x59\x45\x82\x3b\x14\x54\x19\x80\x66\x42\x31\xde\xad\x4d\x45\x51\xb0\x0a\x0a\x5c\x6d\x6d\x06\x60\x71\x4b\x36\x26\x0c\x00\x86\xa0\x60\x33\xbf\x9f\x7c\x9e\x6d\x1e\x26\xf7\xb3\x0c\xc0\x61\x45\x6f\x7b\x31\x90\x4e\x70\x69\x02\x29\x98\xda\x3a\x0a\xf1\xbc\xc8\x00\x82\x67\x39\x30\xe5\x87\xc1\x27\x91\xd0\x36\xba\x53\x05\x9b\xd9\x8f\x62\xb1\x9a\xdd\x6d\x8a\xc5\x72\xdd\x9f\xb0\x17\xaf\xbd\x55\xb0\x9e\x16\x87\x9e\x20\x97\x24\xc5\xc5\x99\x48\x96\xb4\x78\xbe\x62\x3a\x0a\x4a\xdd\xfa\xb0\x1e\x77\x1f\xd1\xa2\xd3\xc4\x0a\x5e\x5e\xb3\x7f\xcd\x94\x9e\x85\x5c\xfa\x19\x47\xfb\xf1\x96\x04\xfb\x8c\xef\x28\x58\xdf\x54\xe4\xe4\xff\xc4\x0c\xb0\xef\x35\x2d\x0a\x45\xf9\x6b\xf4\x4c\xc1\x1a\x8d\x51\xc1\xf8\x2c\x8e\x0a\x45\x3f\x7d\x1d\xa8\x5d\xd1\xbb\xa4\x18\x25\xc5\x51\x36\xdd\x60\x77\xc1\x4b\x6f\xad\x71\xe5\xb7\xb0\x43\xa1\xb6\xcf\xc3\x4e\xaf\x51\xe1\xf3\xaa\xe6\x92\x14\x8c\x6f\x6f\xdf\xa7\xe7\x41\x55\xb0\x47\xc0\x30\xa4\x54\xf6\x8d\xc1\xab\x16\x2f\x99\x04\xe8\x63\x48\xa5\xbd\x13\x34\x8e\x78\x40\x96\x83\xa9\x30\x59\xb9\x29\x35\x7f\x30\x7e\xb4\x29\x96\x8b\x2f\xb3\xe9\xba\xa5\x1e\x0d\x64\x54\xc7\x7a\x73\x1c\x85\x6e\xb4\xa8\xad\x2d\xbc\x35\xba\x51\x30\x7f\x7c\xf0\x52\x30\xc5\x74\xd9\x27\xdc\xf9\xed\x9c\xce\x06\x8b\x70\xf2\x74\x74\x7a\xf9\x51\x0f\xeb\xd2\x42\xa4\x22\xb7\xff\xc4\xbe\x1a\x32\xe7\x10\x49\x33\xc9\x92\x1e\xd5\x1f\x2c\x67\x0e\xf3\x0e\x0a\x03\x1c\x53\x6c\x97\x21\xb6\xeb\x71\xec\x09\xb2\xf4\xdf\x3f\xb1\xbf\xb0\x89\xfd\x56\xc1\xcb\xeb\xef\x00\x00\x00\xff\xff\xb3\x61\x03\x64\x99\x04\x00\x00")
+
+func templatesKubernetesTemplateBytes() ([]byte, error) {
+	return bindataRead(
+		_templatesKubernetesTemplate,
+		"templates/kubernetes-template",
+	)
+}
+
+func templatesKubernetesTemplate() (*asset, error) {
+	bytes, err := templatesKubernetesTemplateBytes()
+	if err != nil {
+		return nil, err
+	}
+
+	info := bindataFileInfo{name: "templates/kubernetes-template", size: 1177, mode: os.FileMode(420), modTime: time.Unix(1563423581, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -207,6 +228,7 @@ var _bindata = map[string]func() (*asset, error){
 	"templates/compose-template": templatesComposeTemplate,
 	"templates/docker-template": templatesDockerTemplate,
 	"templates/jenkins-template": templatesJenkinsTemplate,
+	"templates/kubernetes-template": templatesKubernetesTemplate,
 }
 
 // AssetDir returns the file names below a certain
@@ -254,6 +276,7 @@ var _bintree = &bintree{nil, map[string]*bintree{
 		"compose-template": &bintree{templatesComposeTemplate, map[string]*bintree{}},
 		"docker-template": &bintree{templatesDockerTemplate, map[string]*bintree{}},
 		"jenkins-template": &bintree{templatesJenkinsTemplate, map[string]*bintree{}},
+		"kubernetes-template": &bintree{templatesKubernetesTemplate, map[string]*bintree{}},
 	}},
 }}
 
